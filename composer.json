@@ -1,0 +1,22 @@
+{
+  "name": "abexto/yii2-logeia-phpunit",
+  "keywords": ["yii2", "phpunit"],
+  "type": "yii2-extension",  
+  "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Andreas Prucha, Abexto - Helicon Software Development",
+            "email": "andreas.prucha@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": ">6"
+    },
+    "autoload": {
+        "psr-4": {
+            "abexto\\logeia\\yii\\phpunit\\": "src/",
+            "abexto\\logeia\\yii\\phpunit\\tests": "tests/"
+        }
+    }
+}
