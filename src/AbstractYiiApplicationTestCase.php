@@ -36,7 +36,7 @@ namespace abexto\logeia\yii\phpunit;
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
  */
-class AbstractYiiApplicationTestCase extends \PHPUnit\Framework\TestCase
+abstract class AbstractYiiApplicationTestCase extends \PHPUnit\Framework\TestCase
 {
     //put your code here
 }
