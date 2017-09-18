@@ -11,8 +11,10 @@
         }
     ],
     "require": {
-        "phpunit/phpunit": "<6",
         "yiisoft/yii2": "~2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "<6"
     },
     "autoload": {
         "psr-4": {
