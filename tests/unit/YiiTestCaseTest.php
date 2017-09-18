@@ -29,14 +29,25 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace abexto\logeia\yii\phpunit;
+namespace abexto\logeia\yii\phpunit\tests\unit;
 
 /**
- * Description of AbstractYiiApplicationTestCase
+ * Description of AbstractYiiTestCaseTest
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
  */
-abstract class AbstractYiiApplicationTestCase extends \PHPUnit\Framework\TestCase
+class AbstractYiiTestCaseTest extends \abexto\logeia\yii\phpunit\AbstractYiiTestCase
 {
-    //put your code here
+    public function testMockYiiConsoleApplication()
+    {
+        static::mockYiiConsoleApplication();
+        $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
+    }
+    
+    public function testMockYiiWebApplication()
+    {
+        static::mockYiiWebApplication();
+        $this->assertInstanceOf(\yii\web\Application::class, \Yii::$app);
+    }
+    
 }

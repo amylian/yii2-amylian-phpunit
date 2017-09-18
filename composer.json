@@ -11,13 +11,13 @@
         }
     ],
     "require": {
-        "phpunit/phpunit": ">6",
+        "phpunit/phpunit": "<6",
         "yiisoft/yii2": "~2"
     },
     "autoload": {
         "psr-4": {
             "abexto\\logeia\\yii\\phpunit\\": "src/",
-            "abexto\\logeia\\yii\\phpunit\\tests": "tests/"
+            "abexto\\logeia\\yii\\phpunit\\tests\\": "tests/"
         }
     }
 }
