@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace abexto\logeia\yii\phpunit;
+namespace abexto\amylian\yii\phpunit;
 
 /**
  * Description of Bootstrap
@@ -48,8 +48,8 @@ class Bootstrap
      */
     protected static function autoDetectVendorPath()
     {
-        if (defined('ABEXTO_LOGEIA_VENDOR_PATH')) {
-            static::$vendorPath = ABEXTO_LOGEIA_VENDOR_PATH;
+        if (defined('ABEXTO_AMYLIAN_VENDOR_PATH')) {
+            static::$vendorPath = ABEXTO_AMYLIAN_VENDOR_PATH;
         }
     }
 
