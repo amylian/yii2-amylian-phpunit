@@ -1,5 +1,5 @@
 {
-  "name": "abexto/yii2-amylian-phpunit",
+  "name": "amylian/yii2-amylian-phpunit",
   "keywords": ["yii2", "phpunit"],
   "type": "yii2-extension",  
   "license": "BSD-3-Clause",
