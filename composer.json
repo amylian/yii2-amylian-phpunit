@@ -1,5 +1,5 @@
 {
-  "name": "abexto/yii2-logeia-phpunit",
+  "name": "abexto/yii2-amylian-phpunit",
   "keywords": ["yii2", "phpunit"],
   "type": "yii2-extension",  
   "license": "BSD-3-Clause",
@@ -18,8 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "abexto\\logeia\\yii\\phpunit\\": "src/",
-            "abexto\\logeia\\yii\\phpunit\\tests\\": "tests/"
+            "abexto\\amylian\\yii\\phpunit\\": "src/",
+            "abexto\\amylian\\yii\\phpunit\\tests\\": "tests/"
         }
     }
 }
