@@ -1,7 +1,0 @@
-<phpunit bootstrap="autoload.php">
-  <testsuites>
-    <testsuite name="yii2-amylian-phpunit TestSuite">
-      <directory suffix="Test.php">./unit</directory>
-    </testsuite>
-  </testsuites>
-</phpunit>

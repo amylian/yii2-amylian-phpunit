@@ -29,14 +29,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace abexto\logeia\yii\phpunit\tests\unit;
+namespace abexto\logeia\yii\phpunit\tests\units;
 
 /**
  * Description of AbstractYiiTestCaseTest
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
  */
-class AbstractYiiTestCaseTest extends \abexto\logeia\yii\phpunit\AbstractYiiTestCase
+class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
 {
     public function testMockYiiConsoleApplication()
     {

@@ -89,6 +89,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      * Creates a new Yii mockup application
      * 
      * @param type $config
+     * @param class $appClass
      */
     
     protected static function mockYiiApplication($config = [], $appClass)

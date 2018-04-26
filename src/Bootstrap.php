@@ -59,14 +59,14 @@ class Bootstrap
      * Note: Before calling this function, composer-autoload.php should be loaded by calling [[Bootstrap::requireFramework()]]
      * 
      * @param type $bootstrapFile Filename of the PhpUnit bootstrap.php file
+     * @param string $testsRootDir Tests Root directory
      * @param type $options
      * @param type $aliases
      */
-    public static function initYii($bootstrapFile, $options = [], $aliases = [])
+    public static function initYii($bootstrapFile, $testsRootDir, $options = [], $aliases = [])
     {
-        $bootstrapFileDir           = dirname($bootstrapFile);
         $options                    = \yii\helpers\ArrayHelper::merge([
-                    'testsPath'            => dirname($bootstrapFile),
+                    'testsPath'            => $testsRootDir,
                     'vendorPath'           => null,
                     'errorReporting'       => -1,
                     'yiiEnbleErrorHandler' => false,
@@ -100,13 +100,13 @@ class Bootstrap
         }
     }
     
-    public static function initEnv($bootstrapFile, $options = [], $aliases = [])
+    public static function initEnv($bootstrapFile, $testsRootDir, $options = [], $aliases = [])
     {
         $options = array_merge([
             'vendorPath' => null,
             'yiiMainPhp' => '@vendor/yiisoft/yii2/Yii.php'], $options
         );
-        static::initYii($bootstrapFile, $options, $aliases);
+        static::initYii($bootstrapFile, $testsRootDir, $options, $aliases);
     }
 
 }
