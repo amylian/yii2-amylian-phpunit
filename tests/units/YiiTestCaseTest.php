@@ -38,16 +38,26 @@ namespace abexto\logeia\yii\phpunit\tests\units;
  */
 class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
 {
+
     public function testMockYiiConsoleApplication()
     {
         static::mockYiiConsoleApplication();
         $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
     }
-    
+
     public function testMockYiiWebApplication()
     {
         static::mockYiiWebApplication();
         $this->assertInstanceOf(\yii\web\Application::class, \Yii::$app);
     }
-    
+
+    public function testRuntimeAlias()
+    {
+        static::mockYiiWebApplication();
+        \yii\helpers\BaseFileHelper::removeDirectory(__DIR__ . '/../runtime');
+        $rt = \Yii::getAlias('@runtime');
+        \yii\helpers\BaseFileHelper::createDirectory($rt);
+        $this->assertDirectoryExists(__DIR__ .'/../runtime');
+    }
+
 }
