@@ -96,7 +96,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     {
         new $appClass(\yii\helpers\ArrayHelper::merge([
             'id' => 'testapp',
-            'basePath' => __DIR__,
+            'basePath' => Bootstrap::$basePath,
             'vendorPath' => Bootstrap::$vendorPath,
         ], $config));
     }

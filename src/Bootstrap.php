@@ -41,8 +41,12 @@ class Bootstrap
 
     public static $vendorPath = null;
     
-    public static $testsPath = null;
-
+    public static $runtimePath = null;
+    
+    public static $defaultAliases = [];
+    
+    public static $basePath = null;
+    
     /**
      * Automatically sets the vendorPath
      */
@@ -59,14 +63,14 @@ class Bootstrap
      * Note: Before calling this function, composer-autoload.php should be loaded by calling [[Bootstrap::requireFramework()]]
      * 
      * @param type $bootstrapFile Filename of the PhpUnit bootstrap.php file
-     * @param string $testsRootDir Tests Root directory
+     * @param string $basePath Tests Root directory
      * @param type $options
      * @param type $aliases
      */
-    public static function initYii($bootstrapFile, $testsRootDir, $options = [], $aliases = [])
+    public static function initYii($bootstrapFile, $basePath, $options = [], $aliases = [])
     {
         $options                    = \yii\helpers\ArrayHelper::merge([
-                    'testsPath'            => $testsRootDir,
+                    'testsPath'            => $basePath,
                     'vendorPath'           => null,
                     'errorReporting'       => -1,
                     'yiiEnbleErrorHandler' => false,
@@ -77,7 +81,7 @@ class Bootstrap
         } elseif (!isset(static::$vendorPath)) {
             static::autoDetectVendorPath();
         }
-        static::$testsPath = $options['testsPath'];
+        static::$basePath = $basePath;
         error_reporting($options['errorReporting']);
         define('YII_ENABLE_ERROR_HANDLER', false);
         define('YII_DEBUG', true);
@@ -89,15 +93,15 @@ class Bootstrap
             require_once str_replace('@vendor', static::$vendorPath, $options['yiiMainPhp']);
         }
         
+        
         $aliases = array_merge([
             '@vendor' => static::$vendorPath,
-            '@tests' => static::$testsPath,
-            '@data' => static::$testsPath.'/data',
-            '@runtime' => static::$testsPath.'/runtime'
+            '@tests' => static::$basePath,
+            '@data' => static::$basePath.'/data',
         ], $aliases);
-        foreach ($aliases as $alias => $path) {
-            \Yii::setAlias($alias, $path);
-        }
+        
+        self::$defaultAliases = $aliases;
+        
     }
     
     public static function initEnv($bootstrapFile, $testsRootDir, $options = [], $aliases = [])
