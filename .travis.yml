@@ -8,6 +8,7 @@ php:
   - 7.1
   - 7.2
 
-# omitting "script:" will default to phpunit
-# use the $DB env variable to determine the phpunit.xml to use
+before_script:
+  - composer install
+
 script: phpunit --configuration tests/testconfig/phpunit.xml --coverage-text
