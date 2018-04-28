@@ -11,7 +11,7 @@
 
   <testsuites>
     <testsuite name="Abexto Amylian PhpUnit Test Suite">
-      <directory>../units</directory>
+      <directory>./units</directory>
     </testsuite>
   </testsuites>
 
