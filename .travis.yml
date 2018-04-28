@@ -24,4 +24,4 @@ before_script:
       PHPUNIT_FLAGS="--coverage-clover=coverage.clover"
     fi
 script:
-  - phpunit --configuration tests/testconfig/phpunit.xml $PHPUNIT_FLAGS
+  - phpunit $PHPUNIT_FLAGS
