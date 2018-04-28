@@ -5,13 +5,13 @@
   beStrictAboutChangesToGlobalState="true"
   beStrictAboutOutputDuringTests="true"
   beStrictAboutTestsThatDoNotTestAnything="true"
-  bootstrap="./bootstrap.php"
+  bootstrap="./tests/bootstrap.php"
 >
 
 
   <testsuites>
     <testsuite name="Abexto Amylian PhpUnit Test Suite">
-      <directory>./units</directory>
+      <directory>./tests/units</directory>
     </testsuite>
   </testsuites>
 
