@@ -7,6 +7,5 @@ if (file_exists($autoLoader)) {
     $autoLoader = __DIR__.'/../../vendor/autoload.php';
     require_once $autoLoader;
 }
-define ('ABEXTO_AMYLIAN_VENDOR_PATH' , dirname($autoLoader));
-abexto\amylian\yii\phpunit\Bootstrap::initEnv(__FILE__, __DIR__.'/..');
+abexto\amylian\yii\phpunit\Bootstrap::initEnv(__FILE__, __DIR__.'/..', dirname($autoLoader));
 
