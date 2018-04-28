@@ -60,44 +60,45 @@ class Bootstrap
     /**
      * Initializes Yii for PhpUnit-Tests
      * 
-     * Note: Before calling this function, composer-autoload.php should be loaded by calling [[Bootstrap::requireFramework()]]
-     * 
-     * @param type $bootstrapFile Filename of the PhpUnit bootstrap.php file
-     * @param string $basePath Tests Root directory
-     * @param string $vendorPath Tests Root directory
-     * @param array $options Array of options for the runtime environment:
-     *      <ul>
-     *          <li>'yiiMainPhp': (Default: '@vendor/yiisoft/yii2/Yii.php') Path to php file defining the Yii Static class.
-     *          <li>'errorReporting': (Default: -1) Error Reporting flag. See {@link error_reporting()}</li>
-     *          <li>'yiiEnbleErrorHandler': (Default: false) Value for YII_ENABLE_ERROR_HANDLER constant</li>
-     *          <li>'yiiDebug': (Default: true) Value for YII_DEBUG</li>
-     *          <li>'yiiEnv': (Default: 'test') Value for YII_ENV</li>
-     *      </ul>
+     * @param string $mainScript    Path to the main script. $_SERVER['SCRIPT_NAME'] and $_SERVER['SCRIPT_FILENAME']
+     *                              will be set to this value if they are not already defined. 
+     * @param string $basePath      Tests Root directory
+     * @param string $vendorPath    Tests Root directory
+     * @param array $options        Array of options for the runtime environment:
+     *                              <ul>
+     *                                  <li>'yiiMainPhp': (Default: '@vendor/yiisoft/yii2/Yii.php') Path to php file defining the Yii Static class.
+     *                                  <li>'errorReporting': (Default: -1) Error Reporting flag. See {@link error_reporting()}</li>
+     *                                  <li>'yiiEnbleErrorHandler': (Default: false) Value for YII_ENABLE_ERROR_HANDLER constant</li>
+     *                                  <li>'yiiDebug': (Default: true) Value for YII_DEBUG</li>
+     *                                  <li>'yiiEnv': (Default: 'test') Value for YII_ENV</li>
+     *                              </ul>
      *      <b>Note: The options used as default are commonly used for testing, so it's usually not necessary to specify an option.
      *          If a constant is already defined, the option will be ignored</b>
      * @param array $aliases Array of Yii Aliases (See: {@link \Yii::setAlias}
      */
-    public static function initYii($bootstrapFile, $basePath, $vendorPath, $options = [], $aliases = [])
+    public static function initYii($mainScript, $basePath, $vendorPath, $options = [], $aliases = [])
     {
         $options                    = \yii\helpers\ArrayHelper::merge([
+                    'yiiMainPhp'           => '@vendor/yiisoft/yii2/Yii.php',
                     'errorReporting'       => -1,
                     'yiiEnbleErrorHandler' => false,
                     'yiiDebug'             => true,
                     'yiiEnv'               => 'test'], $options);
-        static::$vendorPath = $options['vendorPath'];
+        static::$vendorPath = $vendorPath;
         static::$basePath = $basePath;
         error_reporting($options['errorReporting']);
         defined('YII_ENABLE_ERROR_HANDLER') || define('YII_ENABLE_ERROR_HANDLER', $options['yiiEnbleErrorHandler']);
         defined('YII_DEBUG') || define('YII_DEBUG', $options['yiiDebug']);
         defined('YII_ENV') || define('YII_ENV', $options['yiiEnv']);
-        $_SERVER['SCRIPT_NAME']     = $bootstrapFile;
-        $_SERVER['SCRIPT_FILENAME'] = $bootstrapFile;
+        $_SERVER['SCRIPT_NAME']     = $mainScript;
+        $_SERVER['SCRIPT_FILENAME'] = $mainScript;
 
         if ($options['yiiMainPhp']) {
             require_once str_replace('@vendor', static::$vendorPath, $options['yiiMainPhp']);
         }
         
         $aliases = array_merge([
+            '@app'    => static::$basePath,
             '@vendor' => static::$vendorPath,
             '@tests' => static::$basePath,
             '@data' => static::$basePath.'/data',
@@ -110,9 +111,9 @@ class Bootstrap
         }
     }
     
-    public static function initEnv($bootstrapFile, $testsRootDir, $vendorPath, $options = [], $aliases = [])
+    public static function initEnv($testsRootDir, $vendorPath, $options = [], $aliases = [])
     {
-        static::initYii($bootstrapFile, $testsRootDir, $options, $aliases);
+        static::initYii($testsRootDir, $vendorPath, $options, $aliases);
     }
 
 }
