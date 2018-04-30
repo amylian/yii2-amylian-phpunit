@@ -40,13 +40,10 @@ class Bootstrap
 {
 
     public static $vendorPath = null;
-    
     public static $runtimePath = null;
-    
     public static $defaultAliases = [];
-    
     public static $basePath = null;
-    
+
     /**
      * Automatically sets the vendorPath
      */
@@ -84,8 +81,8 @@ class Bootstrap
                     'yiiEnbleErrorHandler' => false,
                     'yiiDebug'             => true,
                     'yiiEnv'               => 'test'], $options);
-        static::$vendorPath = $vendorPath;
-        static::$basePath = $basePath;
+        static::$vendorPath         = $vendorPath;
+        static::$basePath           = $basePath;
         error_reporting($options['errorReporting']);
         defined('YII_ENABLE_ERROR_HANDLER') || define('YII_ENABLE_ERROR_HANDLER', $options['yiiEnbleErrorHandler']);
         defined('YII_DEBUG') || define('YII_DEBUG', $options['yiiDebug']);
@@ -96,24 +93,27 @@ class Bootstrap
         if ($options['yiiMainPhp']) {
             require_once str_replace('@vendor', static::$vendorPath, $options['yiiMainPhp']);
         }
-        
+
         $aliases = array_merge([
             '@app'    => static::$basePath,
             '@vendor' => static::$vendorPath,
-            '@tests' => static::$basePath,
-            '@data' => static::$basePath.'/data',
-        ], $aliases);
-        
+            '@tests'  => static::$basePath,
+            '@data'   => static::$basePath . '/data',
+                ], $aliases);
+
         self::$defaultAliases = $aliases;
-        
-        foreach(self::$defaultAliases as $alias => $value) {
+
+        foreach (self::$defaultAliases as $alias => $value) {
             \Yii::setAlias($alias, $value);
         }
     }
-    
+
     public static function initEnv($testsRootDir, $vendorPath, $options = [], $aliases = [])
     {
         static::initYii($testsRootDir, $vendorPath, $options, $aliases);
+        if (!class_exists('PHPUnit_Framework_TestCase')) {
+            class_alias('PHPUnit_Framework_TestCase', '\PHPUnit\Framework\TestCase');        
+        }
     }
 
 }
