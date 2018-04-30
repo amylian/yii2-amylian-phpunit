@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (c) 2017, Andreas Prucha, Abexto - Helicon Software Development
+ * Copyright (c) 2018, Andreas Prucha, Abexto - Helicon Software Development
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,60 +32,21 @@
 namespace abexto\amylian\yii\phpunit;
 
 /**
- * Description of AbstractYiiApplicationTestCase
+ * Description of mockYii
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
  */
-abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
+class mockYii
 {
-    
-    /**
-     * @var bool If true, the mock application will be destroyed automatically after each test
-     */
-    protected $autoDestroyYiiApplicationAfterTest = true;
-    
-    /**
-     * @inheritDoc
-     * 
-     * Note: if [[$$autoDestroyYiiApplicationAfterTest]] is set to true, 
-     * [[destroyYiiApplication()]] is called.
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-        if ($this->autoDestroyYiiApplicationAfterTest) {
-            static::destroyYiiApplication();
-        }
-    }
-    
-    /**
-     * @inheritDoc
-     * 
-     * Note: if a Yii mockup application exists, 
-     * [[destroyYiiApplication()]] is called.
-     */
-    public static function tearDownAfterClass()
-    {
-        parent::tearDownAfterClass();
-        if (isset(\Yii::$app)) {
-            $logger = \Yii::getLogger();
-            $logger->flush();
-        }
-        static::destroyYiiApplication();
-    }    
-    
     /**
      * Destroys application in Yii::$app by setting it to null.
      */
-    protected static function destroyYiiApplication()
+    public static function destroyYiiApplication()
     {
-        /*
         if (\Yii::$app && \Yii::$app->has('session', true)) {
             \Yii::$app->session->close();
         }
         \Yii::$app = null;
-        */
-        return mockYii::destroyYiiApplication();
     }    
     
     /**
@@ -95,17 +56,14 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      * @param class $appClass
      */
     
-    protected static function mockYiiApplication($config = [], $appClass)
+    public static function mockYiiApplication($config = [], $appClass)
     {
-        /*
         new $appClass(\yii\helpers\ArrayHelper::merge([
             'id' => 'testapp',
             'aliases' => Bootstrap::$defaultAliases,
             'basePath' => Bootstrap::$basePath,
             'vendorPath' => Bootstrap::$vendorPath,
         ], $config));
-         */
-        return mockYii::mockYiiApplication($config, $appClass);
     }
     
     
@@ -115,12 +73,9 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      * @param array $config The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
-    protected static function mockYiiConsoleApplication($config = [], $appClass = '\yii\console\Application')
+    public static function mockYiiConsoleApplication($config = [], $appClass = '\yii\console\Application')
     {
-        /*
         static::mockYiiApplication($config, $appClass);
-        */
-        return mockYii::mockYiiConsoleApplication($config, $appClass);
     }
 
     /**
@@ -129,9 +84,8 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      * @param array $config The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
-    protected static function mockYiiWebApplication($config = [], $appClass = '\yii\web\Application')
+    public static function mockYiiWebApplication($config = [], $appClass = '\yii\web\Application')
     {
-        /*
         static::mockYiiApplication(\yii\helpers\ArrayHelper::merge([
             'aliases' => [
                 '@bower' => '@vendor/bower-asset',
@@ -145,9 +99,5 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
                 ],
             ],
         ], $config), $appClass);
-        */
-        return mockYii::mockYiiWebApplication($config, $appClass);
     }
-    
-    
 }
