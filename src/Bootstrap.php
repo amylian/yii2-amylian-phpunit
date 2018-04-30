@@ -111,8 +111,8 @@ class Bootstrap
     public static function initEnv($testsRootDir, $vendorPath, $options = [], $aliases = [])
     {
         static::initYii($testsRootDir, $vendorPath, $options, $aliases);
-        if (!class_exists('PHPUnit_Framework_TestCase')) {
-            class_alias('PHPUnit_Framework_TestCase', '\PHPUnit\Framework\TestCase');        
+        if (!class_exists('\PHPUnit_Framework_TestCase')) {
+            require_once __DIR__.'/_oldNameWrappers.php';
         }
     }
 
