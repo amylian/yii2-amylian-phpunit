@@ -40,22 +40,22 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * Specifies that {@link destroyYiiApplication()} is called in {@link static::tearDown()}
+     * Specifies that {@link destroyYiiApplication()} is called in {@link self::tearDown()}
      */
     const DESTROY_YII_IN_TEARDOWN = 0x01;
 
     /**
-     * Specifies that {@link destroyYiiApplication()} is called in {@link satic::tearDownAfterClass()}
+     * Specifies that {@link destroyYiiApplication()} is called in {@link self::tearDownAfterClass()}
      */
-    const DESTORY_YII_IN_TEARDWONAFTERCLASS = 0x02;
+    const DESTORY_YII_IN_TEARDWON_AFTERCLASS = 0x02;
 
     /**
-     * Default teardown flag - includes {@link static::AUTO_DESTROY_YII_IN_TEARDOWN} and {@link static::AUTO_DESTORY_YII_IN_TEARDWONAFTERCLASS}
+     * Default teardown flag - No automatic tear down at all
      */
     const DESTORY_YII_NEVER = 0x00;
 
     /**
-     * Default teardown flag - includes {@link static::AUTO_DESTROY_YII_IN_TEARDOWN} and {@link static::AUTO_DESTORY_YII_IN_TEARDWONAFTERCLASS}
+     * Default teardown flag - includes {@link static::AUTO_DESTROY_YII_IN_TEARDOWN} and {@link self::AUTO_DESTORY_YII_IN_TEARDWONAFTERCLASS}
      */
     const DESTORY_YII_IN_ANY_TEARDOWN = 0xFF;
 
@@ -92,7 +92,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     public static function tearDownAfterClass()
     {
         parent::tearDownAfterClass();
-        if (static::$_autoDestroyYiiInFlags & static::AUTO_DESTROY_YII_IN_TEARDOWNAFTERCLASS) {
+        if (static::$_autoDestroyYiiInFlags & static::DESTORY_YII_IN_TEARDWON_AFTERCLASS) {
             static::destroyYiiApplication(static::$_autoDestroyYiiFlags);
         }
     }
