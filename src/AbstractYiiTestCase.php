@@ -38,12 +38,37 @@ namespace abexto\amylian\yii\phpunit;
  */
 abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
 {
-    
+
     /**
-     * @var bool If true, the mock application will be destroyed automatically after each test
+     * Specifies that {@link destroyYiiApplication()} is called in {@link static::tearDown()}
      */
-    protected $autoDestroyYiiApplicationAfterTest = true;
-    
+    const DESTROY_YII_IN_TEARDOWN = 0x01;
+
+    /**
+     * Specifies that {@link destroyYiiApplication()} is called in {@link satic::tearDownAfterClass()}
+     */
+    const DESTORY_YII_IN_TEARDWONAFTERCLASS = 0x02;
+
+    /**
+     * Default teardown flag - includes {@link static::AUTO_DESTROY_YII_IN_TEARDOWN} and {@link static::AUTO_DESTORY_YII_IN_TEARDWONAFTERCLASS}
+     */
+    const DESTORY_YII_NEVER = 0x00;
+
+    /**
+     * Default teardown flag - includes {@link static::AUTO_DESTROY_YII_IN_TEARDOWN} and {@link static::AUTO_DESTORY_YII_IN_TEARDWONAFTERCLASS}
+     */
+    const DESTORY_YII_IN_ANY_TEARDOWN = 0xFF;
+
+    /**
+     * @var int controls when {@link destroyYiiApplication()} is called automatically
+     */
+    protected static $_autoDestroyYiiInFlags = static::AUTO_DESTORY_YII_IN_DEFAULT;
+
+    /**
+     * @var int controls when {@link destroyYiiApplication()} is called automatically
+     */
+    protected static $_autoDestroyYiiFlags   = MockYii::DESTORY_DEFAULT;
+
     /**
      * @inheritDoc
      * 
@@ -53,11 +78,11 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     protected function tearDown()
     {
         parent::tearDown();
-        if ($this->autoDestroyYiiApplicationAfterTest) {
-            static::destroyYiiApplication();
+        if (static::$_autoDestroyYiiInFlags & static::AUTO_DESTROY_YII_IN_TEARDOWN) {
+            static::destroyYiiApplication(static::$_autoDestroyYiiFlags);
         }
     }
-    
+
     /**
      * @inheritDoc
      * 
@@ -67,87 +92,121 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     public static function tearDownAfterClass()
     {
         parent::tearDownAfterClass();
-        if (isset(\Yii::$app)) {
-            $logger = \Yii::getLogger();
-            $logger->flush();
+        if (static::$_autoDestroyYiiInFlags & static::AUTO_DESTROY_YII_IN_TEARDOWNAFTERCLASS) {
+            static::destroyYiiApplication(static::$_autoDestroyYiiFlags);
         }
-        static::destroyYiiApplication();
-    }    
-    
+    }
+
     /**
      * Destroys application in Yii::$app by setting it to null.
      */
-    protected static function destroyYiiApplication()
+    protected static function destroyYiiApplication($destroyFlags = static::DESTORY_DEFAULT)
     {
         /*
-        if (\Yii::$app && \Yii::$app->has('session', true)) {
-            \Yii::$app->session->close();
-        }
-        \Yii::$app = null;
-        */
-        return mockYii::destroyYiiApplication();
-    }    
-    
+          if (\Yii::$app && \Yii::$app->has('session', true)) {
+          \Yii::$app->session->close();
+          }
+          \Yii::$app = null;
+         */
+        return MockYii::destroyYiiApplication($destroyFlags);
+    }
+
     /**
      * Creates a new Yii mockup application
      * 
+     * This function calls {@link MockYii::mockYiiApplication()}. See there for details
+     * 
      * @param type $config
+     * @param int|bool $destroyIn see {@link setAutoDestroyYiiFlags()}
+     * @param int|bool $destroyFlags see {@link setAutoDestroyYiiFlags()}
      * @param class $appClass
      */
-    
     protected static function mockYiiApplication($config = [], $appClass)
     {
         /*
-        new $appClass(\yii\helpers\ArrayHelper::merge([
-            'id' => 'testapp',
-            'aliases' => Bootstrap::$defaultAliases,
-            'basePath' => Bootstrap::$basePath,
-            'vendorPath' => Bootstrap::$vendorPath,
-        ], $config));
+          new $appClass(\yii\helpers\ArrayHelper::merge([
+          'id' => 'testapp',
+          'aliases' => Bootstrap::$defaultAliases,
+          'basePath' => Bootstrap::$basePath,
+          'vendorPath' => Bootstrap::$vendorPath,
+          ], $config));
          */
         return mockYii::mockYiiApplication($config, $appClass);
+        static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
     }
-    
-    
+
+    /**
+     * Sets when the Yii Mock Application is destroyed
+     * 
+     * @param bool|int $destroyIn   DESTROY_YII_IN_Xxxx flags or 
+     *                              true for {@link static::DESTORY_YII_IN_ANY_TEARDOWN} or
+     *                              false for {@link static::DESTROY_YII_NEVER}
+     * @param bool|int $destroyFlags    Any {@link MockYii}::DESTROY_Xxxx flag combintion or 
+     *                                  true for {@link MockYii::DESTORY_DEFAULT} or
+     *                                  false for {@link MockYii::DESTORY_NOTHING}
+     */
+    protected static function setAutoDestroyYiiFlags($destroyIn = true, $destroyFlags = true)
+    {
+        if ($destroyIn === true)
+            $destroyIn = static::DESTORY_YII_IN_ANY_TEARDOWN;
+        elseif ($destroyIn === false)
+            $destroyIn = static::DESTROY_YII_NEVER;
+        if ($destroyFlags === true)
+            $destroyFlags === MockYii::DESTORY_DEFAULT;
+        elseif ($destroyFlags === false)
+            $destroyFlags === MockYii::DESTROY_NOTHING;
+        static::$_autoDestroyYiiFlags = $destroyIn;
+        static::$_autoDestroyYiiInFlags = $destroyFlags;
+    }
+
     /**
      * Creates a new Yii console mockup application 
      * 
+     * This function calls {@link MockYii::mockYiiConsoleApplication()}. See there for details
+     * 
      * @param array $config The application configuration, if needed
-     * @param string $appClass name of the application class to create
+     * @param int|bool $destroyIn see {@link setAutoDestroyYiiFlags()}
+     * @param int|bool $destroyFlags see {@link setAutoDestroyYiiFlags()}
+     * @param string|null $appClass name of the application class to create
+     *                    If this parameter is not specified or null is passed,
+     *                    {@link \yii\console\Application} is used.
      */
-    protected static function mockYiiConsoleApplication($config = [], $appClass = '\yii\console\Application')
+    protected static function mockYiiConsoleApplication($config = [], $destroyIn = true, $destroyFlags = true, $appClass = '\yii\console\Application')
     {
-        /*
-        static::mockYiiApplication($config, $appClass);
-        */
         return mockYii::mockYiiConsoleApplication($config, $appClass);
+        static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
     }
 
     /**
      * Creates a new Yii web mockup application 
      * 
+     * This function calls {@link MockYii::mockYiiWebApplication()}. See there for details
+     * 
+     * 
      * @param array $config The application configuration, if needed
+     * @param int|bool $destroyIn see {@link setAutoDestroyYiiFlags()}
+     * @param int|bool $destroyFlags see {@link setAutoDestroyYiiFlags()}
      * @param string $appClass name of the application class to create
      */
     protected static function mockYiiWebApplication($config = [], $appClass = '\yii\web\Application')
     {
         /*
-        static::mockYiiApplication(\yii\helpers\ArrayHelper::merge([
-            'aliases' => [
-                '@bower' => '@vendor/bower-asset',
-                '@npm' => '@vendor/npm-asset',
-            ],
-            'components' => [
-                'request' => [
-                    'cookieValidationKey' => 'wefJDF8sfdsfSDefwqdxj9oq',
-                    'scriptFile' => __DIR__ . '/index.php',
-                    'scriptUrl' => '/index.php',
-                ],
-            ],
-        ], $config), $appClass);
-        */
+          static::mockYiiApplication(\yii\helpers\ArrayHelper::merge([
+          'aliases' => [
+          '@bower' => '@vendor/bower-asset',
+          '@npm' => '@vendor/npm-asset',
+          ],
+          'components' => [
+          'request' => [
+          'cookieValidationKey' => 'wefJDF8sfdsfSDefwqdxj9oq',
+          'scriptFile' => __DIR__ . '/index.php',
+          'scriptUrl' => '/index.php',
+          ],
+          ],
+          ], $config), $appClass);
+         */
         return mockYii::mockYiiWebApplication($config, $appClass);
+        static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
     }
-    
-    
+
 }

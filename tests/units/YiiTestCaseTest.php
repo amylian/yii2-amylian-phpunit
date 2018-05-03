@@ -38,6 +38,44 @@ namespace abexto\logeia\yii\phpunit\tests\units;
  */
 class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
 {
+    
+    protected function testAutoDestroyInTearDownStep1()
+    {
+        static::mockYiiConsoleApplication([], true);
+        $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
+    }
+
+    /**
+     * @depends testAutoDestroyInTearDownStep1
+     */
+    protected function testAutoDestroyInTearDownStep2()
+    {
+        $this->assertNull(\Yii::$app); // Must be null
+    }
+    
+    protected function testDoNotAutoDestroyInTearDownStep1()
+    {
+        static::mockYiiConsoleApplication([], false);
+        $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
+    }
+
+    /**
+     * @depends testDoNotAutoDestroyInTearDownStep1
+     */
+    protected function testDoNotAutoDestroyInTearDownStep2()
+    {
+        $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
+    }
+    
+    
+    public function testDestroyYiiApplicaiton()
+    {
+        static::destroyYiiApplication(MockYii::DESTROY_EVERYTHING); // Make sure we do not have anything any more
+        static::mockYiiConsoleApplication(); // Create an app
+        $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app); // now it must exist
+        static::destroyYiiApplication(); // Destroy
+        $this->assertNull(\Yii::$app); // now it must exist
+    }
 
     public function testMockYiiConsoleApplication()
     {
