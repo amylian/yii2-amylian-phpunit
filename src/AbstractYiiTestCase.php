@@ -121,7 +121,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      * @param int|bool $destroyFlags see {@link setAutoDestroyYiiFlags()}
      * @param class $appClass
      */
-    protected static function mockYiiApplication($config = [], $appClass)
+    protected static function mockYiiApplication($config = [], $destroyIn, $destroyFlags, $appClass)
     {
         /*
           new $appClass(\yii\helpers\ArrayHelper::merge([
@@ -188,7 +188,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      * @param int|bool $destroyFlags see {@link setAutoDestroyYiiFlags()}
      * @param string $appClass name of the application class to create
      */
-    protected static function mockYiiWebApplication($config = [], $appClass = '\yii\web\Application')
+    protected static function mockYiiWebApplication($config = [], $destroyIn = true, $destroyFlags = true,  $appClass = '\yii\web\Application')
     {
         /*
           static::mockYiiApplication(\yii\helpers\ArrayHelper::merge([
