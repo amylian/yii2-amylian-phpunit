@@ -62,7 +62,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     /**
      * @var int controls when {@link destroyYiiApplication()} is called automatically
      */
-    protected static $_autoDestroyYiiInFlags = self::AUTO_DESTORY_YII_IN_DEFAULT;
+    protected static $_autoDestroyYiiInFlags = self::DESTORY_YII_IN_ANY_TEARDOWN;
 
     /**
      * @var int controls when {@link destroyYiiApplication()} is called automatically
