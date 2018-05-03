@@ -100,7 +100,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     /**
      * Destroys application in Yii::$app by setting it to null.
      */
-    protected static function destroyYiiApplication($destroyFlags = static::DESTORY_DEFAULT)
+    protected static function destroyYiiApplication($destroyFlags = MockYii::DESTORY_DEFAULT)
     {
         /*
           if (\Yii::$app && \Yii::$app->has('session', true)) {
@@ -131,7 +131,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
           'vendorPath' => Bootstrap::$vendorPath,
           ], $config));
          */
-        return mockYii::mockYiiApplication($config, $appClass);
+        return MockYii::mockYiiApplication($config, $appClass);
         static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
     }
 
@@ -173,7 +173,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      */
     protected static function mockYiiConsoleApplication($config = [], $destroyIn = true, $destroyFlags = true, $appClass = '\yii\console\Application')
     {
-        return mockYii::mockYiiConsoleApplication($config, $appClass);
+        return MockYii::mockYiiConsoleApplication($config, $appClass);
         static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
     }
 
@@ -205,7 +205,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
           ],
           ], $config), $appClass);
          */
-        return mockYii::mockYiiWebApplication($config, $appClass);
+        return MockYii::mockYiiWebApplication($config, $appClass);
         static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
     }
 
