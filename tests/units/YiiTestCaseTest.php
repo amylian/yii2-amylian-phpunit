@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace abexto\logeia\yii\phpunit\tests\units;
+namespace abexto\amylian\yii\phpunit\tests\units;
 
 /**
  * Description of AbstractYiiTestCaseTest
