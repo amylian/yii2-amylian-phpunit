@@ -55,7 +55,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     const DESTORY_YII_NEVER = 0x00;
 
     /**
-     * Default teardown flag - includes {@link static::AUTO_DESTROY_YII_IN_TEARDOWN} and {@link self::AUTO_DESTORY_YII_IN_TEARDWONAFTERCLASS}
+     * Default teardown flag - includes {@link static::DESTROY_YII_IN_TEARDOWN} and {@link self::DESTORY_YII_IN_TEARDWON_AFTERCLASS}
      */
     const DESTORY_YII_IN_ANY_TEARDOWN = 0xFF;
 
@@ -78,7 +78,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     protected function tearDown()
     {
         parent::tearDown();
-        if (static::$_autoDestroyYiiInFlags & static::AUTO_DESTROY_YII_IN_TEARDOWN) {
+        if (static::$_autoDestroyYiiInFlags & static::DESTROY_YII_IN_TEARDOWN) {
             static::destroyYiiApplication(static::$_autoDestroyYiiFlags);
         }
     }
