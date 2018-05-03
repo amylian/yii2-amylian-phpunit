@@ -79,7 +79,7 @@ class MockYii
      * 
      * @param int $destroyFlags 
      */
-    public static function destroyYiiApplication($destroyFlags = static::DESTORY_DEFAULT)
+    public static function destroyYiiApplication($destroyFlags = self::DESTORY_DEFAULT)
     {
         if (!$destroyFlags)
             return false;
