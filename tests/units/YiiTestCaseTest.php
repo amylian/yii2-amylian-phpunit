@@ -48,12 +48,12 @@ class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
     /**
      * @depends testAutoDestroyInTearDownStep1
      */
-    protected function testAutoDestroyInTearDownStep2()
+    public function testAutoDestroyInTearDownStep2()
     {
         $this->assertNull(\Yii::$app); // Must be null
     }
     
-    protected function testDoNotAutoDestroyInTearDownStep1()
+    public function testDoNotAutoDestroyInTearDownStep1()
     {
         static::mockYiiConsoleApplication([], false);
         $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
@@ -62,7 +62,7 @@ class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
     /**
      * @depends testDoNotAutoDestroyInTearDownStep1
      */
-    protected function testDoNotAutoDestroyInTearDownStep2()
+    public function testDoNotAutoDestroyInTearDownStep2()
     {
         $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
     }
