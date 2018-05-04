@@ -47,27 +47,27 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     /**
      * Specifies that {@link destroyYiiApplication()} is called in {@link self::tearDownAfterClass()}
      */
-    const DESTORY_YII_IN_TEARDWON_AFTERCLASS = 0x02;
+    const DESTROY_YII_IN_TEARDWON_AFTERCLASS = 0x02;
 
     /**
      * Default teardown flag - No automatic tear down at all
      */
-    const DESTORY_YII_NEVER = 0x00;
+    const DESTROY_YII_NEVER = 0x00;
 
     /**
-     * Default teardown flag - includes {@link static::DESTROY_YII_IN_TEARDOWN} and {@link self::DESTORY_YII_IN_TEARDWON_AFTERCLASS}
+     * Default teardown flag - includes {@link static::DESTROY_YII_IN_TEARDOWN} and {@link self::DESTROY_YII_IN_TEARDWON_AFTERCLASS}
      */
-    const DESTORY_YII_IN_ANY_TEARDOWN = 0xFF;
-
-    /**
-     * @var int controls when {@link destroyYiiApplication()} is called automatically
-     */
-    protected static $_autoDestroyYiiInFlags = self::DESTORY_YII_IN_ANY_TEARDOWN;
+    const DESTROY_YII_IN_ANY_TEARDOWN = 0xFF;
 
     /**
      * @var int controls when {@link destroyYiiApplication()} is called automatically
      */
-    protected static $_autoDestroyYiiFlags   = MockYii::DESTORY_DEFAULT;
+    protected static $_autoDestroyYiiInFlags = self::DESTROY_YII_IN_ANY_TEARDOWN;
+
+    /**
+     * @var int controls when {@link destroyYiiApplication()} is called automatically
+     */
+    protected static $_autoDestroyYiiFlags   = MockYii::DESTROY_DEFAULT;
 
     /**
      * @inheritDoc
@@ -92,7 +92,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     public static function tearDownAfterClass()
     {
         parent::tearDownAfterClass();
-        if (static::$_autoDestroyYiiInFlags & static::DESTORY_YII_IN_TEARDWON_AFTERCLASS) {
+        if (static::$_autoDestroyYiiInFlags & static::DESTROY_YII_IN_TEARDWON_AFTERCLASS) {
             static::destroyYiiApplication(static::$_autoDestroyYiiFlags);
         }
     }
@@ -100,7 +100,7 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
     /**
      * Destroys application in Yii::$app by setting it to null.
      */
-    protected static function destroyYiiApplication($destroyFlags = MockYii::DESTORY_DEFAULT)
+    protected static function destroyYiiApplication($destroyFlags = MockYii::DESTROY_DEFAULT)
     {
         /*
           if (\Yii::$app && \Yii::$app->has('session', true)) {
@@ -139,20 +139,20 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      * Sets when the Yii Mock Application is destroyed
      * 
      * @param bool|int $destroyIn   DESTROY_YII_IN_Xxxx flags or 
-     *                              true for {@link static::DESTORY_YII_IN_ANY_TEARDOWN} or
+     *                              true for {@link static::DESTROY_YII_IN_ANY_TEARDOWN} or
      *                              false for {@link static::DESTROY_YII_NEVER}
      * @param bool|int $destroyFlags    Any {@link MockYii}::DESTROY_Xxxx flag combintion or 
-     *                                  true for {@link MockYii::DESTORY_DEFAULT} or
-     *                                  false for {@link MockYii::DESTORY_NOTHING}
+     *                                  true for {@link MockYii::DESTROY_DEFAULT} or
+     *                                  false for {@link MockYii::DESTROY_NOTHING}
      */
     protected static function setAutoDestroyYiiFlags($destroyIn = true, $destroyFlags = true)
     {
         if ($destroyIn === true)
-            $destroyIn = static::DESTORY_YII_IN_ANY_TEARDOWN;
+            $destroyIn = static::DESTROY_YII_IN_ANY_TEARDOWN;
         elseif ($destroyIn === false)
             $destroyIn = static::DESTROY_YII_NEVER;
         if ($destroyFlags === true)
-            $destroyFlags === MockYii::DESTORY_DEFAULT;
+            $destroyFlags === MockYii::DESTROY_DEFAULT;
         elseif ($destroyFlags === false)
             $destroyFlags === MockYii::DESTROY_NOTHING;
         static::$_autoDestroyYiiFlags = $destroyIn;
