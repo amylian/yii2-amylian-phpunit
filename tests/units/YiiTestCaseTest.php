@@ -39,7 +39,7 @@ namespace abexto\amylian\yii\phpunit\tests\units;
 class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
 {
     
-    protected function testAutoDestroyInTearDownStep1()
+    public function testAutoDestroyInTearDownStep1()
     {
         static::mockYiiConsoleApplication([], true);
         $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
