@@ -40,40 +40,45 @@ class MockYii
 {
 
     /**
-     * Flag for {@link static::destroyYiiApplication}: sets \Yii::$app to null (included in {@link static::DESTORY_DEFAULT})
+     * Flag for {@link static::destroyYiiApplication}: sets \Yii::$app to null (included in {@link static::DESTROY_DEFAULT})
      */
     const DESTROY_NULL_APP        = 0x00000001;
 
     /**
-     * Flag for {@link static::destroyYiiApplication}: Calls {@link \yii\log\Logger::flush()} (included in {@link static::DESTORY_DEFAULT})
+     * Flag for {@link static::destroyYiiApplication}: Calls {@link \yii\log\Logger::flush()} (included in {@link static::DESTROY_DEFAULT})
      */
     const DESTROY_FLUSH_LOG       = 0x00000002;
 
     /**
-     * Flag for {@link static::destroyYiiApplication}: Calls {@link \yii\web\Session::close()} before  (included in {@link static::DESTORY_DEFAULT})
+     * Flag for {@link static::destroyYiiApplication}: Calls {@link \yii\web\Session::close()} before  (included in {@link static::DESTROY_DEFAULT})
      */
     const DESTROY_CLOSE_SESSION   = 0x00000004;
 
     /**
-     * Flag for {@link static::destroyYiiApplication}: Calls {@link \yii\di\Container::clear()} for every item (included in {@link static::DESTORY_DEFAULT})
+     * Flag for {@link static::destroyYiiApplication}: Calls {@link \yii\di\Container::clear()} for every item (included in {@link static::DESTROY_DEFAULT})
      */
     const DESTROY_CLEAR_CONTAINER = 0x00000008;
     
     
     /**
-     * Flag for {@link static::destroyYiiApplication}: Sets \Yii::$container to null (This is not part of DESTORY_DEFAULT and usually not necessary)
+     * Flag for {@link static::destroyYiiApplication}: Sets \Yii::$container to null (This is not part of DESTROY_DEFAULT and usually not necessary)
      */
     const DESTROY_NULL_CONTAINER = 0x00010000;
-
+    
     /**
-     * Flag for {@link static::destroyYiiApplication}: Default flag including all usually necessary steps.
+     * Flag for {@link static::destroyYiiApplication}: All usually necessary destructions are done
      */
-    const DESTORY_DEFAULT         = 0x0000ffff;
+    const DESTROY_ALL         = 0x0000ffff;
+    
+    /**
+     * Flag for {@link static::destroyYiiApplication}: same as {@link static::DESTROY_ALL}
+     */
+    const DESTROY_DEFAULT           = self::DESTROY_ALL;
 
     /**
      * Flag for {@link static::destroyYiiApplication}: Sets all DESTROY_Xxxx flags
      */
-    const DESOTRY_ALL             = 0xffffffff;
+    const DESTROY_REALLY_EVERYTHING             = 0xffffffff;
 
     /**
      * Flag for {@link static::destroyYiiApplication}: Does not destroy anything and turns the function call into an noop
@@ -85,7 +90,7 @@ class MockYii
      * 
      * @param int $destroyFlags 
      */
-    public static function destroyYiiApplication($destroyFlags = self::DESTORY_DEFAULT)
+    public static function destroyYiiApplication($destroyFlags = self::DESTROY_DEFAULT)
     {
         if (!$destroyFlags)
             return false;
