@@ -58,6 +58,12 @@ class MockYii
      * Flag for {@link static::destroyYiiApplication}: Calls {@link \yii\di\Container::clear()} for every item (included in {@link static::DESTORY_DEFAULT})
      */
     const DESTROY_CLEAR_CONTAINER = 0x00000008;
+    
+    
+    /**
+     * Flag for {@link static::destroyYiiApplication}: Sets \Yii::$container to null (This is not part of DESTORY_DEFAULT and usually not necessary)
+     */
+    const DESTROY_NULL_CONTAINER = 0x00010000;
 
     /**
      * Flag for {@link static::destroyYiiApplication}: Default flag including all usually necessary steps.
@@ -121,6 +127,14 @@ class MockYii
                 \Yii::$container->clear($class);
             }
         }
+        
+        // Null container
+        
+        if ($destroyFlags & static::DESTROY_NULL_CONTAINER) {
+           \Yii::$container = null;
+        }
+        
+        
     }
 
     /**
