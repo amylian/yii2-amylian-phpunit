@@ -57,6 +57,7 @@ class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
     {
         static::mockYiiConsoleApplication([], false);
         $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app);
+        $this->assertEquals(static::$_autoDestroyYiiInFlags, static::DESTROY_YII_IN_ANY_TEARDOWN);
     }
 
     /**
