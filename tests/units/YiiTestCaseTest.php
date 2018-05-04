@@ -70,7 +70,7 @@ class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
     
     public function testDestroyYiiApplicaiton()
     {
-        static::destroyYiiApplication(\abexto\amylian\yii\phpunit\MockYii::DESTROY_EVERYTHING); // Make sure we do not have anything any more
+        static::destroyYiiApplication(static::DESTROY_EVERYTHING); // Make sure we do not have anything any more
         static::mockYiiConsoleApplication(); // Create an app
         $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app); // now it must exist
         static::destroyYiiApplication(); // Destroy
