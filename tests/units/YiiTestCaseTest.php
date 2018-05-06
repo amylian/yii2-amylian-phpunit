@@ -96,6 +96,7 @@ class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
         \yii\helpers\BaseFileHelper::removeDirectory(__DIR__ . '/../runtime');
         $rt = \Yii::getAlias('@runtime');
         \yii\helpers\BaseFileHelper::createDirectory($rt);
+        $this->assertSame(realpath($rt), realpath(__DIR__ . '/../runtime'));
         $this->assertDirectoryExists(__DIR__ .'/../runtime');
     }
 

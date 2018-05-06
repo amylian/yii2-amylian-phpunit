@@ -154,6 +154,7 @@ class MockYii
                     'id'         => 'testapp',
                     'aliases'    => Bootstrap::$defaultAliases,
                     'basePath'   => Bootstrap::$basePath,
+                    'runtimePath'=> Bootstrap::$basePath.'/runtime',
                     'vendorPath' => Bootstrap::$vendorPath,
                         ], $config));
     }
