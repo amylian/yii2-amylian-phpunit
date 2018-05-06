@@ -131,8 +131,8 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
           'vendorPath' => Bootstrap::$vendorPath,
           ], $config));
          */
-        return MockYii::mockYiiApplication($config, $appClass);
         static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
+        return MockYii::mockYiiApplication($config, $appClass);
     }
 
     /**
@@ -173,8 +173,8 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
      */
     protected static function mockYiiConsoleApplication($config = [], $destroyIn = true, $destroyFlags = true, $appClass = '\yii\console\Application')
     {
-        return MockYii::mockYiiConsoleApplication($config, $appClass);
         static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
+        return MockYii::mockYiiConsoleApplication($config, $appClass);
     }
 
     /**
@@ -205,8 +205,8 @@ abstract class AbstractYiiTestCase extends \PHPUnit\Framework\TestCase
           ],
           ], $config), $appClass);
          */
-        return MockYii::mockYiiWebApplication($config, $appClass);
         static::setAutoDestroyYiiFlags($destroyIn, $destroyFlags);
+        return MockYii::mockYiiWebApplication($config, $appClass);
     }
 
 }
