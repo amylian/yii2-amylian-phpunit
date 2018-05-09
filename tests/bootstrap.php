@@ -10,5 +10,5 @@ if (file_exists($autoLoader)) {
     $autoLoader = __DIR__.'/../../../autoload.php'; // As no vendor dir could be found, the package is propably in the vendor dir
     require_once $autoLoader;
 }
-abexto\amylian\yii\phpunit\Bootstrap::initEnv(__DIR__, __DIR__, dirname($autoLoader));
+amylian\yii\phpunit\Bootstrap::initEnv(__DIR__, __DIR__, dirname($autoLoader));
 

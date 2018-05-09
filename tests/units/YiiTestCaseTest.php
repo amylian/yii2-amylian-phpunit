@@ -29,14 +29,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace abexto\amylian\yii\phpunit\tests\units;
+namespace amylian\yii\phpunit\tests\units;
 
 /**
  * Description of AbstractYiiTestCaseTest
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
  */
-class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
+class YiiTestCaseTest extends \amylian\yii\phpunit\AbstractYiiTestCase
 {
     
     public function testAutoDestroyInTearDownStep1()
@@ -71,7 +71,7 @@ class YiiTestCaseTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
     
     public function testDestroyYiiApplicaiton()
     {
-        static::destroyYiiApplication(\abexto\amylian\yii\phpunit\MockYii::DESTROY_ALL); // Make sure we do not have anything any more
+        static::destroyYiiApplication(\amylian\yii\phpunit\MockYii::DESTROY_ALL); // Make sure we do not have anything any more
         static::mockYiiConsoleApplication(); // Create an app
         $this->assertInstanceOf(\yii\console\Application::class, \Yii::$app); // now it must exist
         static::destroyYiiApplication(); // Destroy

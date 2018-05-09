@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace abexto\amylian\yii\phpunit;
+namespace amylian\yii\phpunit;
 
 /**
  * Description of mockYii
