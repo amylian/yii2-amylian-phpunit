@@ -1,5 +1,6 @@
 {
   "name": "amylian/yii2-amylian-phpunit",
+  "description": "ATTENTION EXPERIMENTAL! Amylian/PhpUnit for Yii2 - Utilities for easy Yii2 PhpUnit Tests",
   "keywords": ["yii2", "phpunit"],
   "type": "yii2-extension",  
   "license": "BSD-3-Clause",
