@@ -36,7 +36,6 @@ namespace amylian\yii\phpunit;
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
  * 
- * Namespace?
  */
 class Bootstrap
 {
